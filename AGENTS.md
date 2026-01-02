@@ -1,57 +1,63 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
+This is a SvelteKit app.
 
-This repository is currently a clean slate with no tracked source files yet. As you add code, keep a simple, conventional layout so contributors can find things quickly. A typical structure could be:
+- `src/routes/` holds pages and route layouts (e.g., `src/routes/+page.svelte`).
+- `src/lib/` contains shared modules and server utilities (see `src/lib/server/db/`).
+- `src/app.html` and `src/app.d.ts` define app shell and types.
+- `e2e/` contains Playwright end-to-end tests.
+- `static/` is for static assets served as-is (e.g., `static/robots.txt`).
 
-- `src/` for application or library code
-- `tests/` for automated tests
-- `scripts/` for dev or automation scripts
-- `docs/` for design notes and guides
-- `assets/` for static files (images, fixtures, sample data)
-
-If you choose a different layout, document it here and keep directories purposeful and small.
+Keep new modules near the routes or libraries that use them, and prefer small, focused files.
 
 ## Build, Test, and Development Commands
+Use the Bun scripts in `package.json` as the single source of truth.
 
-No build or test commands are configured yet. Once tooling is added, list the canonical commands and what they do. Examples to document (if applicable):
+- `bun run dev` — start the Vite dev server.
+- `bun run build` — build the production bundle.
+- `bun run preview` — serve the production build locally.
+- `bun run lint` — run Prettier checks and ESLint.
+- `bun run format` — format the codebase with Prettier.
+- `bun run test` — run unit tests and Playwright E2E tests.
+- `bun run test:unit` — run Vitest unit tests.
+- `bun run test:e2e` — run Playwright tests.
 
-- `npm run dev` — start local development server
-- `npm test` — run the full test suite
-- `make build` — produce production artifacts
+Database tooling (Drizzle + Docker):
 
-Keep these entries current and prefer a single, blessed command for each task.
+- `bun run db:start` — start Postgres via `compose.yaml`.
+- `bun run db:push` — push schema changes to the database.
+- `bun run db:generate` — generate Drizzle artifacts.
+- `bun run db:migrate` — run migrations.
+- `bun run db:studio` — open Drizzle Studio.
 
 ## Coding Style & Naming Conventions
+Prettier is the formatting source of truth, with tabs for indentation and single quotes. ESLint is enabled for TypeScript/Svelte.
 
-Style rules are not defined yet. When you pick a language or framework, specify:
-
-- Indentation (e.g., 2 spaces vs 4 spaces)
-- File naming (e.g., `snake_case.py`, `kebab-case.ts`)
-- Formatting/linting tools (e.g., `prettier`, `eslint`, `black`)
-
-Add a short note on any project-specific naming patterns for modules, classes, or tests.
+- Svelte components use `+page.svelte`, `+layout.svelte`, and `+server.ts` naming under `src/routes/`.
+- Unit tests use `*.spec.ts` (examples: `src/routes/page.svelte.spec.ts`).
+- E2E tests live in `e2e/` and use `*.test.ts`.
 
 ## Testing Guidelines
+Unit tests run with Vitest; E2E tests run with Playwright. There is no explicit coverage threshold yet.
 
-Testing requirements are not defined yet. When tests are introduced, document:
+- Run `bun run test:unit` during development.
+- Run `bun run test` before opening a PR to cover unit + E2E.
 
-- Frameworks used (e.g., `pytest`, `jest`, `go test`)
-- Test file naming (e.g., `*_test.go`, `test_*.py`)
-- Minimum coverage expectations, if any
+## Configuration & Environment
+Local development expects a Postgres URL.
 
-Include the exact command contributors should run locally.
+- Copy `.env.example` to `.env` and set `DATABASE_URL`.
+- The default Docker setup uses `compose.yaml` and the credentials in `.env.example`.
 
 ## Commit & Pull Request Guidelines
-
-There is no Git history yet, so no established commit convention. Until one emerges, use clear, imperative messages (e.g., "Add data import pipeline"). If you adopt a standard like Conventional Commits, note it here.
+There is no established commit convention yet. Use short, imperative messages (e.g., "Add coding stats summary page").
 
 PRs should include:
 
-- A short description of the change and its motivation
-- Linked issues or tickets (if applicable)
-- Screenshots or logs for UI/behavior changes
+- A concise description of changes and rationale.
+- Linked issues (if applicable).
+- Screenshots for UI changes or logs for behavior changes.
 
 ## Agent-Specific Instructions
-
-This repository uses `AGENTS.md` as the contributor guide. Keep it concise (200–400 words), update it when tooling or structure changes, and avoid speculative instructions.
+This repository uses `AGENTS.md` as the contributor guide. Update it when structure or tooling changes.
