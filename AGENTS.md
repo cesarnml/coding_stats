@@ -5,7 +5,7 @@
 This is a SvelteKit app.
 
 - `src/routes/` holds pages and route layouts (e.g., `src/routes/+page.svelte`).
-- `src/lib/` contains shared modules and server utilities (see `src/lib/server/db/`).
+- `src/lib/` contains shared modules and server utilities.
 - `src/app.html` and `src/app.d.ts` define app shell and types.
 - `e2e/` contains Playwright end-to-end tests.
 - `static/` is for static assets served as-is (e.g., `static/robots.txt`).
@@ -25,14 +25,6 @@ Use the Bun scripts in `package.json` as the single source of truth.
 - `bun run test:unit` — run Vitest unit tests.
 - `bun run test:e2e` — run Playwright tests.
 
-Database tooling (Drizzle + Docker):
-
-- `bun run db:start` — start Postgres via `compose.yaml`.
-- `bun run db:push` — push schema changes to the database.
-- `bun run db:generate` — generate Drizzle artifacts.
-- `bun run db:migrate` — run migrations.
-- `bun run db:studio` — open Drizzle Studio.
-
 ## Coding Style & Naming Conventions
 
 Prettier is the formatting source of truth, with tabs for indentation and single quotes. ESLint is enabled for TypeScript/Svelte.
@@ -50,10 +42,7 @@ Unit tests run with Vitest; E2E tests run with Playwright. There is no explicit 
 
 ## Configuration & Environment
 
-Local development expects a Postgres URL.
-
-- Copy `.env.example` to `.env` and set `DATABASE_URL`.
-- The default Docker setup uses `compose.yaml` and the credentials in `.env.example`.
+- Copy `.env.example` to `.env` and add any required environment variables for your setup.
 
 ## Commit & Pull Request Guidelines
 
